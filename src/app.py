@@ -1,9 +1,9 @@
 import flask
-from .service import Fact
-from .service.trivia import TriviaService
-from .service.exchange import ExchangeService
+from service import Fact
+from service.trivia import TriviaService
+from service.exchange import ExchangeService
 
-from . import config
+import config
 
 facts = [Fact('Toyota sold {total_value} cars in this time globally!', 32, 10),
          Fact(u'You have collectively been exposed to {total_value}\u00b5Sv of radiation during this time!', 0.345, 3600),
