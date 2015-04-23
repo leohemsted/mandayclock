@@ -15,6 +15,9 @@ var factoid_list = document.getElementById('interesting_factoids');
 
 var uname_input = document.getElementById('username');
 var pword_input = document.getElementById('password');
+var exchange_button = document.getElementById('exchange');
+
+var exchange_info = document.getElementById('exchange_info');
 
 var set_attrs = function(el, attrs) {
     for (var attr in attrs) {
@@ -33,12 +36,24 @@ var factoid_ajax = function(headcount, secs) {
                 update_factoid_basic();
            }
         }
-    }
+    };
 
     ajax.open("GET", url, true);
     ajax.send();
+};
 
-}
+var exchange_ajax = function(un, pw) {
+    var url = 'ex_trivia';
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState === XMLHttpRequest.DONE) {
+            update_exchange(ajax.responseText);
+        }
+    };
+
+    ajax.open("POST", url, true);
+    ajax.send(JSON.stringify({username:un, password:pw}));
+};
 
 /***************************************************/
 
@@ -55,7 +70,7 @@ var start_clock = function() {
     }, 1000);
     factoid_timer = setInterval(function() {
         factoid_ajax(headcount, (moment() - start_time) / 1000.0);
-    }, 1000 * 2);
+    }, 1000 * 10);
 };
 
 var stop_clock = function() {
@@ -90,6 +105,10 @@ var update_factoid_html = function(factoids) {
     }
 };
 
+var update_exchange = function(exchange_data) {
+    exchange_info.textContent = JSON.stringify(JSON.parse(exchange_data));
+};
+
 /***************************************************/
 
 people_input.addEventListener('click', function() {
@@ -106,6 +125,7 @@ people_input.addEventListener('click', function() {
     });
 
     people_input.parentElement.replaceChild(input, people_input);
+    people_input = input;
     input.focus();
 });
 
@@ -120,6 +140,7 @@ pword_input.addEventListener('click', function() {
 
     pword_input.parentElement.replaceChild(input, pword_input);
     input.focus();
+    pword_input = input;
 });
 
 uname_input.addEventListener('click', function() {
@@ -131,7 +152,12 @@ uname_input.addEventListener('click', function() {
         'value': 'fred'
     });
     uname_input.parentElement.replaceChild(input, uname_input);
+    uname_input = input;
     input.focus();
+});
+
+exchange_button.addEventListener('click', function() {
+    exchange_ajax(uname_input.value, pword_input.value);
 });
 
 time_span.addEventListener('click', function() {
