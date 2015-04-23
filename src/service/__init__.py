@@ -38,12 +38,13 @@ class FactService(object):
 
     def get_fact(self):
         chosen = self.facts[randint(0, len(self.facts)-1)]
-        total_value = chosen.value/float(chosen.seconds_per_value)*self.elapsed_seconds
+        total_value = chosen.value/float(chosen.seconds_per_value)*self.elapsed_seconds*self.number_of_attendees
         total_value = int(round(total_value, 0)) if isinstance(chosen.value, int) else round(total_value, 2)
 
         return chosen.fact.format(value=chosen.value,
                                   seconds_per_value=chosen.seconds_per_value,
                                   elapsed_seconds=self.elapsed_seconds,
+                                  number_of_attendees=self.number_of_attendees,
                                   total_value=total_value)
 
     def _get_unique_facts(self, number):
