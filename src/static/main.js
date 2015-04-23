@@ -49,7 +49,11 @@ var exchange_ajax = function(un, pw) {
     var ajax = new XMLHttpRequest();
     ajax.onreadystatechange = function() {
         if (ajax.readyState === XMLHttpRequest.DONE) {
-            update_exchange(ajax.responseText);
+            if (ajax.status === 200) {
+                update_exchange(ajax.responseText);
+            } else {
+                alert('Error:\n\n' + JSON.parse(ajax.responseText).error_message);
+            }
         }
     };
 
