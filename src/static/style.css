@@ -2,20 +2,26 @@ body {
   background: #eee;
   margin: auto;
 }
-.intro {
+.writing {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-align: center;
 
     width:80%;
     height:80%;
     margin:auto;
-    margin-top: 20%;
+    margin-top: 5%;
 }
 .clickable {
     border: 0px;
     color: #999;
     border-bottom: 1px dotted #000;
 }
+
 input {
     background-color: inherit;
+}
+
+.break {
+    margin: 5%;
+    border-bottom: 1px dotted #222;
 }
