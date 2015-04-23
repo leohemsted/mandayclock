@@ -5,7 +5,7 @@ import flask
 import random
 from service import Fact
 from service.trivia import TriviaService
-from service.exchange import ExchangeService
+from service.exchange import ExchangeService, ExchangeLoginError
 from service.travel_agency import TravelAgency
 
 import config
@@ -90,9 +90,15 @@ def i_definitely_know_all_the_stuff():
         res['status'] = ReturnStatus.error
         return flask.jsonify(**res)
 
-    ex = ExchangeService(config.EXCHANGE_DOMAIN, config.EXCHANGE_URL)
-    ex.connect(username, password)
-    events = ex.list_events()
+    try:
+        ex = ExchangeService(config.EXCHANGE_DOMAIN, config.EXCHANGE_URL)
+        ex.connect(username, password)
+        events = ex.list_events()
+    except ExchangeLoginError as e:
+        res['status'] = ReturnStatus.error
+        res['error_message'] = e.message
+        return flask.make_response(flask.jsonify(**res),
+        500 if res['status'] == 'Error' else 200)
 
     events_output = {}
     for event in events:
