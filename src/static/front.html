@@ -3,11 +3,26 @@
 <head>
     <title>Manday Calculator</title>
     <link href="static/style.css" rel="stylesheet" title="Style">
-    <script src="static/main.js"></script>
     <!-- for auto-refreshing while in dev -->
     <script type="text/javascript" src="http://livejs.com/live.js"></script>
 </head>
 <body>
-    there are currently <input class="clickable" id="count" type="number"> people in the room and the meeting <span class="clickable" id="time">starts soon</span>asbasdb
+    <div class="writing">
+        there are <span class="clickable" id="peeps" type="number">currently no</span> people in the room and the meeting
+        <span id="start">starts</span> <span class="clickable" id="time">soon</span>
+    </div>
+    <div class="">
+
+    </div>
+    <div class="break"></div>
+    <div class="writing">
+        <span id="interesting_factoid"></span>
+    </div>
+    <div class="break"></div>
+    <div class="writing">
+        my name is <span class="clickable" id="username">fred</span> and my password is <span class="clickable" id="password">********</span>
+    </div>
 </body>
+<script src="http://momentjs.com/downloads/moment.js"></script>
+<script src="static/main.js"></script>
 </html>
