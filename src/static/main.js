@@ -68,7 +68,7 @@ var stop_clock = function() {
 var update_factoid_json = function(json_string) {
     var data = JSON.parse(json_string);
     update_factoid_html(data.trivia);
-}
+};
 
 var update_factoid_basic = function() {
     if (headcount) {
@@ -88,7 +88,7 @@ var update_factoid_html = function(factoids) {
         nugget_of_gold.textContent = factoids[i];
         factoid_list.appendChild(nugget_of_gold);
     }
-}
+};
 
 /***************************************************/
 
