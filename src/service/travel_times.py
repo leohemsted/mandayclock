@@ -32,6 +32,9 @@ walking_times = [(((tup[0] * 60) + tup[1]) * 60, tup[2]) for tup in [
 driving_times = [(((tup[0] * 60) + tup[1]) * 60, tup[2]) for tup in [
     (0, 0, "the Hammersmith Gyratory"),
 
+    (0, 44, "St Paul's Cathedral"),
+    (1, 28, "Oxford"),
+    (1, 41, "Silverstone Circuit"),
     (1, 45, "Brighton"),
     (2, 18, "Bristol"),
     (5, 49, "Paris"),
@@ -311,10 +314,3 @@ def how_far_could_i_have_travelled(headcount, num_secs):
         how_far_could_i_have_driven(headcount, num_secs),
         how_far_could_i_have_flown(headcount, num_secs)
     ]
-
-from pprint import pprint as pp
-pp(how_far_could_i_have_travelled(1, 0))
-pp(how_far_could_i_have_travelled(1, 60))
-pp(how_far_could_i_have_travelled(1, 60*60))
-pp(how_far_could_i_have_travelled(1, 60*60*5))
-pp(how_far_could_i_have_travelled(1, 60*60*10))

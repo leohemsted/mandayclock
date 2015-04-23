@@ -1,6 +1,6 @@
 from abc import ABCMeta
 from collections import namedtuple
-from random import randint
+import random
 
 class ExternalService(object):
     __metaclass__ = ABCMeta
@@ -37,7 +37,7 @@ class FactService(object):
             return [self.get_fact() for i in xrange(number)]
 
     def get_fact(self):
-        chosen = self.facts[randint(0, len(self.facts)-1)]
+        chosen = random.choice(self.facts)
         total_value = chosen.value/float(chosen.seconds_per_value)*self.elapsed_seconds*self.number_of_attendees
         total_value = int(round(total_value, 0)) if isinstance(chosen.value, int) else round(total_value, 2)
 

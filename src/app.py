@@ -1,7 +1,9 @@
 import flask
+import random
 from service import Fact
 from service.trivia import TriviaService
 from service.exchange import ExchangeService
+from service.travel_agency import TravelAgency
 
 import config
 
@@ -50,6 +52,11 @@ def i_probably_know_some_stuff():
 
     trivia = TriviaService(facts, attendees, elapsed_seconds)
     res['trivia'] = trivia.get_facts(2)
+
+    # ugly lol
+    holiday_getaway = TravelAgency([], attendees, elapsed_seconds)
+    if random.random() < 0.1:
+        res['trivia'][random.randint(0, 1)] = holiday_getaway.get_fact()
 
     return flask.make_response(flask.jsonify(**res),
         500 if res['status'] == 'Error' else 200)
