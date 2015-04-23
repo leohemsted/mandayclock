@@ -35,7 +35,8 @@ def i_probably_know_some_stuff():
     trivia = TriviaService(facts, attendees, elapsed_seconds)
     res['trivia'] = trivia.get_facts(2)
 
-    return flask.jsonify(**res)
+    return flask.make_response(flask.jsonify(**res),
+        500 if res['status'] == 'Error' else 200)
 
 if __name__ == "__main__":
     app.run(debug=True)
