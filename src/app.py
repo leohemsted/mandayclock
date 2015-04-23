@@ -61,6 +61,7 @@ EVENT_TEMPLATE = {
     'start_date': '',
     'end_date': '',
     'expected_duration_seconds': 0,
+    'trivia': [],
 }
 
 @app.route('/ex_trivia', methods=['POST'])
