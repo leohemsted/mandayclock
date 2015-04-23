@@ -1,3 +1,7 @@
-li {
+span {
     background-color: red
+}
+
+.clickable {
+    border: 0px;
 }
