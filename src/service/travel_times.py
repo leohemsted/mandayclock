@@ -43,7 +43,7 @@ driving_times = [(((tup[0] * 60) + tup[1]) * 60, tup[2]) for tup in [
 ]]
 
 flying_times = [(((tup[0] * 60) + tup[1]) * 60, tup[2]) for tup in [
-    (0, 0, 'nowhere'),
+    (0, 0, 'London City Airport'),
 
     (0, 29, 'Belgium - Brussels'),
     (0, 31, 'Netherlands - Amsterdam'),
