@@ -4,13 +4,14 @@
 var headcount;
 var start_time = null;
 var refresh_timer = null;
+var factoid_timer = null;
 var started = false;
 
 var time_span = document.getElementById('time');
 var the_word_start = document.getElementById('start');
 var people_input = document.getElementById('peeps');
 
-var factoid_span = document.getElementById('interesting_factoid');
+var factoid_list = document.getElementById('interesting_factoids');
 
 var uname_input = document.getElementById('username');
 var pword_input = document.getElementById('password');
@@ -20,6 +21,26 @@ var set_attrs = function(el, attrs) {
         el.setAttribute(attr, attrs[attr]);
     }
 };
+
+var factoid_ajax = function(headcount, secs) {
+    var url = 'trivia?number_of_attendees='+headcount+'&elapsed_seconds='+secs;
+    var ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState === XMLHttpRequest.DONE) {
+           if (ajax.status === 200){
+                update_factoid_json(ajax.responseText);
+           } else {
+                update_factoid_basic();
+           }
+        }
+    }
+
+    ajax.open("GET", url, true);
+    ajax.send();
+
+}
+
+/***************************************************/
 
 var start_clock = function() {
     // change started->start
@@ -31,23 +52,43 @@ var start_clock = function() {
     start_time = moment();
     refresh_timer = setInterval(function() {
         time_span.textContent = start_time.fromNow();
-        update_factoid(moment() - start_time);
     }, 1000);
+    factoid_timer = setInterval(function() {
+        factoid_ajax(headcount, (moment() - start_time) / 1000.0);
+    }, 1000 * 2);
 };
 
 var stop_clock = function() {
     window.clearInterval(refresh_timer);
+    window.clearInterval(factoid_timer);
     the_word_start.textContent = '';
     time_span.textContent = 'has ended! go home.';
 };
 
-var update_factoid = function() {
+var update_factoid_json = function(json_string) {
+    var data = JSON.parse(json_string);
+    update_factoid_html(data.trivia);
+}
+
+var update_factoid_basic = function() {
     if (headcount) {
         var secs_so_far = (moment() - start_time) / 1000.0;
         var mandays = headcount * secs_so_far / 86400.0;
-        factoid_span.textContent = 'you have wasted ' + mandays + ' man days so far';
+        update_factoid_html(['you have wasted ' + mandays + ' man days so far']);
     }
 };
+
+var update_factoid_html = function(factoids) {
+    while (factoid_list.firstChild) {
+        factoid_list.removeChild(factoid_list.firstChild);
+    }
+
+    for (var i in factoids) {
+        var nugget_of_gold = document.createElement('li');
+        nugget_of_gold.textContent = factoids[i];
+        factoid_list.appendChild(nugget_of_gold);
+    }
+}
 
 /***************************************************/
 
@@ -59,6 +100,7 @@ people_input.addEventListener('click', function() {
         'class': 'clickable',
         'value': '7'
     });
+    headcount = 7;
     input.addEventListener('change', function() {
         headcount = +input.value;
     });

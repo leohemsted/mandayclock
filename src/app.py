@@ -23,7 +23,7 @@ def i_probably_know_some_stuff():
     }
 
     attendees = flask.request.args.get('number_of_attendees', 0)
-    elapsed_seconds = flask.request.args.get('elapsed_seconds', 0)
+    elapsed_seconds = int(float(flask.request.args.get('elapsed_seconds', 0)))
 
     if not attendees or not elapsed_seconds:
         res['status'] = 'Error'
