@@ -10,7 +10,7 @@ facts = [Fact('Toyota sold {total_value} cars in this time globally!', 32, 10),
          Fact('Crossrail will have tunnelled {total_value}mm in this time!', 9.92, 60),
          Fact(u'On minimum wage you\'d all have earned \u00a3{total_value} in this time!', 6.50, 3600),
          Fact('You could all have brewed {total_value} cups of tea in this time!', 1, 180),
-         Fact('{number_of_attendees} AdFuser developers could have written {total_value} lines of code in this time!', 6.7, 3600),
+         Fact('{number_of_attendees} AdFuser developers could have written {total_value} lines of code in this time!', 7, 3600),
          Fact('You {number_of_attendees} could have downloaded {total_value} MP3\'s on the average home broadband line in this time!', 1, 77)
          ]
 
