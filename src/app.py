@@ -23,6 +23,15 @@ class ReturnStatus(object):
     error = 'Error'
     ok = 'OK'
 
+def _get_trivia(res, attendees, elapsed_seconds):
+    trivia = TriviaService(facts, attendees, elapsed_seconds)
+    res['trivia'] = trivia.get_facts(2)
+
+    # ugly lol
+    holiday_getaway = TravelAgency([], attendees, elapsed_seconds)
+    if random.random() < 0.4:
+        res['trivia'][random.randint(0, 1)] = holiday_getaway.get_fact()
+
 app = flask.Flask('mandayclock', static_url_path='/static')
 
 @app.route('/')
@@ -51,13 +60,8 @@ def i_probably_know_some_stuff():
         res['status'] = ReturnStatus.error
         return flask.jsonify(**res)
 
-    trivia = TriviaService(facts, attendees, elapsed_seconds)
-    res['trivia'] = trivia.get_facts(2)
-
-    # ugly lol
-    holiday_getaway = TravelAgency([], attendees, elapsed_seconds)
-    if random.random() < 0.1:
-        res['trivia'][random.randint(0, 1)] = holiday_getaway.get_fact()
+    # even uglier side effecting hack
+    _get_trivia(res, attendees, elapsed_seconds)
 
     return flask.make_response(flask.jsonify(**res),
         500 if res['status'] == 'Error' else 200)
@@ -68,6 +72,7 @@ EVENT_TEMPLATE = {
     'start_date': '',
     'end_date': '',
     'expected_duration_seconds': 0,
+    'trivia': [],
 }
 
 @app.route('/ex_trivia', methods=['POST'])
@@ -98,7 +103,7 @@ def i_definitely_know_all_the_stuff():
         event_output['start_date'] = event.start.strftime(config.FORMAT_TIME)
         event_output['end_date'] = event.end.strftime(config.FORMAT_TIME)
         event_output['expected_duration_seconds'] = (event.end - event.start).seconds
-        print event_output
+        _get_trivia(event_output, len(event_output['attendees']), event_output['expected_duration_seconds'])
 
         if event.start <= pytz.timezone("GMT").localize(datetime.now()):
             res['current_events'].append(event_output)
