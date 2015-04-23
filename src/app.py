@@ -37,7 +37,7 @@ def i_probably_know_some_stuff():
     res = RETURN_TEMPLATE
 
     attendees = flask.request.args.get('number_of_attendees', 0)
-    elapsed_seconds = flask.request.args.get('elapsed_seconds', 0)
+    elapsed_seconds = int(float(flask.request.args.get('elapsed_seconds', 0)))
 
     if not attendees or not elapsed_seconds:
         res['status'] = ReturnStatus.error
@@ -51,7 +51,8 @@ def i_probably_know_some_stuff():
     trivia = TriviaService(facts, attendees, elapsed_seconds)
     res['trivia'] = trivia.get_facts(2)
 
-    return flask.jsonify(**res)
+    return flask.make_response(flask.jsonify(**res),
+        500 if res['status'] == 'Error' else 200)
 
 @app.route('/ex_trivia', methods=['POST'])
 def i_definitely_know_all_the_stuff():

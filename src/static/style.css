@@ -21,6 +21,12 @@ input {
     background-color: inherit;
 }
 
+li {
+    list-style-type: none;
+    margin: 1%;
+    background-color: #ddd;
+}
+
 .break {
     margin: 5%;
     border-bottom: 1px dotted #222;
