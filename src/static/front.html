@@ -20,11 +20,19 @@
     </div>
     <div class="break"></div>
     <div class="writing">
-        my name is <span class="clickable" id="username">fred</span> and my password is <span class="clickable" id="password">********</span> and please tell me <span class="clickable" id="exchange">all about my day</span>
+        my name is <input type="text" class="clickable" id="username" value="fred"> and my password is <input class="clickable" id="password" type="password" value="*********"> and please tell me <span class="clickable" id="exchange">all about my day</span>
     </div>
     <div class="break"></div>
     <div class="writing">
-        <span id="exchange_info"></ul>
+        <div id="exchange_info" class="hidden">
+            <span class="bigger">this very second!</span>
+            <ul id="current_events">
+            </ul>
+            <span class="bigger">comming soon!</span>
+            <div class="break"></div>
+            <ul id="future_events">
+            </ul>
+        </div>
     </div>
 </body>
 <script src="http://momentjs.com/downloads/moment.js"></script>

@@ -31,3 +31,26 @@ li {
     margin: 5%;
     border-bottom: 1px dotted #222;
 }
+
+.future {
+    color: #777
+}
+
+.big {
+    font-size: 120%;
+}
+
+.bigger {
+    font-size: 150%;
+}
+
+.small {
+    font-size: 80%;
+}
+.small {
+    font-size: 50%;
+}
+
+.hidden {
+    display: none;
+}

@@ -77,14 +77,16 @@ EVENT_TEMPLATE = {
 
 @app.route('/ex_trivia', methods=['POST'])
 def i_definitely_know_all_the_stuff():
+
     res = {
         'status': ReturnStatus.ok,
         'type': 'mixed',
         'current_events': [],
         'future_events': [],
     }
-    username = flask.request.args.get('username', '')
-    password = flask.request.args.get('password', '')
+
+    username = flask.request.json.get('username', '')
+    password = flask.request.json.get('password', '')
 
     if not username or not password:
         res['status'] = ReturnStatus.error

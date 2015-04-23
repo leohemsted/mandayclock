@@ -17,7 +17,9 @@ var uname_input = document.getElementById('username');
 var pword_input = document.getElementById('password');
 var exchange_button = document.getElementById('exchange');
 
-var exchange_info = document.getElementById('exchange_info');
+var exchange_div = document.getElementById('exchange_info');
+var current_event_list = document.getElementById('current_events');
+var future_event_list = document.getElementById('future_events');
 
 var set_attrs = function(el, attrs) {
     for (var attr in attrs) {
@@ -52,6 +54,7 @@ var exchange_ajax = function(un, pw) {
     };
 
     ajax.open("POST", url, true);
+    ajax.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     ajax.send(JSON.stringify({username:un, password:pw}));
 };
 
@@ -105,8 +108,47 @@ var update_factoid_html = function(factoids) {
     }
 };
 
+var create_event_node = function(event) {
+    var el = document.createElement('li');
+    el.innerHTML = (
+        '<span class="big">' + event.subject + '</span> (' + event.start_date + ')</br>' +
+        event.attendees.length + ' attendees</br>' + event.trivia.join('</br>')
+    )
+    return el;
+};
+
 var update_exchange = function(exchange_data) {
-    exchange_info.textContent = JSON.stringify(JSON.parse(exchange_data));
+    var exchange_info = JSON.parse(exchange_data);
+
+    while (current_event_list.firstChild) {
+        current_event_list.removeChild(current_event_list.firstChild);
+    }
+    while (future_event_list.firstChild) {
+        future_event_list.removeChild(future_event_list.firstChild);
+    }
+    var no_events = document.createElement('li');
+    no_events.innerHTML = 'nothing at all! <span class="small">nothing at all!</span> </span class="smaller">nothing at all!</span>';
+
+
+    if (exchange_info.current_events) {
+        for (var i in exchange_info.current_events) {
+            var current_event = exchange_info.current_events[i];
+            current_event_list.appendChild(create_event_node(current_event));
+        }
+    } else {
+        current_event_list.appendChild(no_events.cloneNode());
+    }
+
+    if (exchange_info.future_events) {
+        for (var i in exchange_info.future_events) {
+            var future_event = exchange_info.future_events[i];
+            var node = create_event_node(future_event);
+            node.setAttribute('class', 'future');
+            future_event_list.appendChild(node);
+        }
+    } else {
+        future_event_list.appendChild(no_events.cloneNode());
+    }
 };
 
 /***************************************************/
@@ -129,34 +171,8 @@ people_input.addEventListener('click', function() {
     input.focus();
 });
 
-pword_input.addEventListener('click', function() {
-    var input = document.createElement('input');
-    set_attrs(input, {
-        'id': 'peeps',
-        'type': 'password',
-        'class': 'clickable',
-        'value': '********'
-    });
-
-    pword_input.parentElement.replaceChild(input, pword_input);
-    input.focus();
-    pword_input = input;
-});
-
-uname_input.addEventListener('click', function() {
-    var input = document.createElement('input');
-    set_attrs(input, {
-        'id': 'username',
-        'type': 'text',
-        'class': 'clickable',
-        'value': 'fred'
-    });
-    uname_input.parentElement.replaceChild(input, uname_input);
-    uname_input = input;
-    input.focus();
-});
-
 exchange_button.addEventListener('click', function() {
+    exchange_div.removeAttribute('class');
     exchange_ajax(uname_input.value, pword_input.value);
 });
 
