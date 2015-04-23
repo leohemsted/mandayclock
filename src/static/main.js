@@ -135,7 +135,7 @@ pword_input.addEventListener('click', function() {
         'id': 'peeps',
         'type': 'password',
         'class': 'clickable',
-        'value': '********'
+        'placeholder': '********'
     });
 
     pword_input.parentElement.replaceChild(input, pword_input);
@@ -149,7 +149,7 @@ uname_input.addEventListener('click', function() {
         'id': 'username',
         'type': 'text',
         'class': 'clickable',
-        'value': 'fred'
+        'placeholder': 'fred'
     });
     uname_input.parentElement.replaceChild(input, uname_input);
     uname_input = input;
