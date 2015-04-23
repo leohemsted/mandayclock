@@ -3,29 +3,15 @@
 
 var people_input = document.getElementById('peeps');
 people_input.addEventListener('click', function() {
-
-    people_input.setAttribute('contentEditable', true);
-    people_input.setAttribute('type', 'number');
-    people_input.focus();
-
-    // highlight existing text
-    var range = document.createRange();
-    range.setStartBefore(people_input.firstChild);
-    range.setEndAfter(people_input.lastChild);
-    var sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-
-
-    // var input = document.createElement('input');
-    // input.setAttribute('id', 'peeps');
-    // input.setAttribute('type', 'number');
-    // input.setAttribute('class', 'clickable');
-    // input.setAttribute('maxlength', '2');
-    // input.setAttribute('size', '2');
-    // input.setAttribute('value', '7');
-    // people_input.parentElement.replaceChild(input, people_input);
-    // input.focus();
+    var input = document.createElement('input');
+    input.setAttribute('id', 'peeps');
+    input.setAttribute('type', 'number');
+    input.setAttribute('class', 'clickable');
+    input.setAttribute('maxlength', '2');
+    input.setAttribute('size', '2');
+    input.setAttribute('value', '7');
+    people_input.parentElement.replaceChild(input, people_input);
+    input.focus();
 });
 
 
