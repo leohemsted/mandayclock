@@ -98,7 +98,7 @@ def i_definitely_know_all_the_stuff():
         events = ex.list_events()
     except ExchangeLoginError as e:
         res['status'] = ReturnStatus.error
-        res['error_message'] = e.message
+        res['error_message'] = e.msg
         return flask.make_response(flask.jsonify(**res),
         500 if res['status'] == 'Error' else 200)
 
@@ -121,4 +121,4 @@ def i_definitely_know_all_the_stuff():
     return flask.jsonify(**res)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

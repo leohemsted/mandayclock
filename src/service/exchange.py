@@ -31,7 +31,7 @@ class ExchangeService(ExternalService):
                 end=timezone("GMT").localize(current_time + timedelta(days=self._days)),
                 details=True)
         except FailedExchangeException as ex:
-            raise ExchangeLoginError(ex.message)
+            raise ExchangeLoginError(ex.msg)
         return self._build_event_list([event for event in events_container.events if event.attendees > 1])
 
     def _build_event_list(self, events):
